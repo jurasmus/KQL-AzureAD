@@ -1,0 +1,4 @@
+SigninLogs
+| where TimeGenerated > ago (14d)
+| summarize ['Single-factor Auth.']=countif(AuthenticationRequirement == "singleFactorAuthentication"), ['MFA']=countif(AuthenticationRequirement == "multiFactorAuthentication") by bin(TimeGenerated, 1d)
+| render timechart with (ytitle="Amount", title="MFA vs non-mfa last 14 days")
